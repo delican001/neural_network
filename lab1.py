@@ -6,11 +6,14 @@ import math
 # number of classes
 num_of_class = 3
 # type of classes: 0,1,2...
-type_of_class = 0
+type_of_class = 1
 # case 0: centers of classes are really far away from each other
 # case 1: centers are pretty much close and classes cross
 # case 2: centers not really far away so classes close to cross, but actually don't
 # case 3: totally random centers
+
+level_of_cross=10
+    #value from 0 to 10 (for type 1)
 
 #number of coordinates for each class
 n=2
@@ -56,19 +59,21 @@ def calc_center(type):
         bad_center= True
         while (bad_center):
             tempcoords = []
-            for i in range(n):
-                tempcoords.append(rnd.randint(low=0, high=max_coord))
-            if (center.__len__()==0):
+            if center.__len__() == 0:
+                for i in range(n):
+                    tempcoords.append(rnd.randint(low=0, high=max_coord))
                 return tempcoords
+            for i in range(n):
+                tempcoords.append(rnd.randint(low=2*min_class_radius*(10-level_of_cross)/20+center[center.__len__()-1][i]-1,high=center[center.__len__()-1][i]+2*min_class_radius*(10-level_of_cross)/10+1))
             for i in range(center.__len__()):
                 dif=0
                 print("Test")
                 for j in range(center[i].__len__()):
                     dif=dif+(center[i][j]-tempcoords[j])*(center[i][j]-tempcoords[j])
                 print(dif)
-                if (dif<min_class_radius*min_class_radius):
-                    bad_center=False
-                    print(bad_center)
+                #if (dif<min_class_radius*min_class_radius & dif>min_class_radius*min_class_radius*level_of_cross/10):
+                bad_center=False
+                print(bad_center)
         return tempcoords
     if type==3:
         return [rnd.randint(low=0, high=max_coord),rnd.randint(low=0, high=max_coord)]
@@ -89,6 +94,9 @@ def draw_classes(classes):
 
     else:
         print("Drawing avvailible only for 2d classes")
+        for i in range(classes.__len__()):
+            print(classes[i].coords)
+            print()
 class Point_class:
     #class_radius = 0
     #class_center = []
