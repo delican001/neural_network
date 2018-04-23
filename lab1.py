@@ -6,7 +6,7 @@ import math
 # number of classes
 num_of_class = 3
 # type of classes: 0,1,2...
-type_of_class = 1
+type_of_class = 0
 # case 0: centers of classes are really far away from each other
 # case 1: centers are pretty much close and classes cross
 # case 2: centers not really far away so classes close to cross, but actually don't
@@ -26,7 +26,7 @@ max_class_radius = 40
 points_in_each_class = 500
 
 # max x and y coords (x=[0,x] , y=[0,y])
-max_coord=1000
+max_coord=900
 
 # matplotlib colors for classes
 color = ['b', 'g', 'r', 'c', 'm', 'y', 'k', 'w']
@@ -34,6 +34,11 @@ center = []
 
 # container for classes
 classes = []
+def generate_classes(number = 5):
+    array=[]
+    for i in range(number):
+        array.append(Point_class())
+    return array
 
 def calc_center(type):
     tempcoords = []
@@ -47,13 +52,12 @@ def calc_center(type):
                 return tempcoords
             for i in range(center.__len__()):
                 dif=0
-                print("Test")
                 for j in range(center[i].__len__()):
                     dif=dif+(center[i][j]-tempcoords[j])*(center[i][j]-tempcoords[j])
-                print(dif)
                 if (dif>min_class_radius*min_class_radius):
                     bad_center=False
-                    print(bad_center)
+                    if (bad_center):
+                        print(bad_center)
         return tempcoords
     if type==1:
         bad_center= True
@@ -67,13 +71,12 @@ def calc_center(type):
                 tempcoords.append(rnd.randint(low=2*min_class_radius*(10-level_of_cross)/20+center[center.__len__()-1][i]-1,high=center[center.__len__()-1][i]+2*min_class_radius*(10-level_of_cross)/10+1))
             for i in range(center.__len__()):
                 dif=0
-                print("Test")
                 for j in range(center[i].__len__()):
                     dif=dif+(center[i][j]-tempcoords[j])*(center[i][j]-tempcoords[j])
-                print(dif)
                 #if (dif<min_class_radius*min_class_radius & dif>min_class_radius*min_class_radius*level_of_cross/10):
                 bad_center=False
-                print(bad_center)
+                if (bad_center):
+                    print(bad_center)
         return tempcoords
     if type==3:
         return [rnd.randint(low=0, high=max_coord),rnd.randint(low=0, high=max_coord)]
@@ -87,9 +90,6 @@ def draw_classes(classes):
                 x.append(classes[i].coords[j][0])
                 y.append(classes[i].coords[j][1])
             plt.plot(x,y,'ro', color=color[rnd.randint(low=0, high=7)])
-            print(x)
-            print(y)
-            print("TEST")
         plt.show()
 
     else:
@@ -121,7 +121,3 @@ class Point_class:
 #        print(self.coords)
 #        print("NEW LINE")
 #        plt.plot(self.coords, 'ro', color=color[rnd.randint(low=0, high=7)])
-
-for i in range(num_of_class):
-    classes.append(Point_class())
-draw_classes(classes)

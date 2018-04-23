@@ -2,19 +2,26 @@ import random as rnd
 import math
 import sys
 
-left_x =-100
-left_y =None
-right_x=100
-right_y=None
-n=5
-length=100
-mutate_coeff=0.001
+left_x =-512
+left_y =-512
+right_x=512
+right_y=512
+n=2
+length=10000
+mutate_coeff=0.1
 hem_const=0.0001
 iterations_num=200000
 
 
 def func(x):
-    return rosenbrock(x)
+    return f(x)
+
+ranges = [[-512,512],[-512,512]]
+def f(v):
+    v147 = v[1]+47
+    first = -(v147) * math.sin(math.sqrt(math.fabs(v[0]/2 + v147)))
+    second = v[0]*math.sin(math.sqrt(math.fabs(v[0]-v147)))
+    return  first - second
 
 def booth_func(x):
     left_x = -10
@@ -73,6 +80,15 @@ def mutate(values):
     for i in range(length):
         for j in range(n):
             values[i][j]=values[i][j]+rnd.uniform(-mutate_coeff,mutate_coeff)
+            if n==2:
+                if values[i][0]>right_x:
+                    values[i][0]=right_x
+                if values[i][1]>right_y:
+                    values[i][1]=right_y
+                if values[i][0]<left_x:
+                    values[i][0]=left_x
+                if values[i][1]<left_y:
+                    values[i][1]=left_y
     return values
 
 values = init()

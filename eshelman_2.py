@@ -80,8 +80,6 @@ def init():
 
 
 def cross(point1, point2):
-    print(point1)
-    print(point2)
     bin_point1 = ''.join([float_to_bin(gen) for gen in point1])
     bin_point2 = ''.join([float_to_bin(gen) for gen in point2])
     first=""
@@ -99,8 +97,6 @@ def cross(point1, point2):
     for index in range(gen_nums):
         f.append(bin_to_float(first[index * 64:(index + 1) * 64]))
         s.append(bin_to_float(second[index * 64:(index + 1) * 64]))
-    print(s)
-    print(f)
     return [s, f]
 
 
